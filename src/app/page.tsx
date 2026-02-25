@@ -1,65 +1,198 @@
-import Image from "next/image";
+import { DemoEditor } from '@/components/LiveDemo/DemoEditor';
+import { FeaturePlayground } from '@/components/FeaturePlayground';
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen">
+      {/* Hero Section */}
+      <section className="container mx-auto px-6 py-20 max-w-7xl">
+        <div className="text-center mb-12">
+          <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
+            Understand Any Word
+            <br />
+            <span className="gradient-text">Instantly with AI</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            Get context-aware definitions for any word on the web.
+            <br />
+            Just select text, hold Command, and click.
+          </p>
+
+          <div className="flex gap-4 justify-center mb-8 flex-wrap">
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href="https://chrome.google.com/webstore"
+              className="btn-primary inline-block"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              Add to Chrome - Free
+            </a>
+            <a href="#demo" className="btn-secondary inline-block">
+              See It In Action
+            </a>
+          </div>
+
+          <p className="text-sm text-gray-500">
+            ✓ Free forever · ✓ No sign-up required · ✓ Works offline
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Live Demo */}
+        <div id="demo" className="max-w-3xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">
+            Try It Now - Interactive Demo
+          </h2>
+          <DemoEditor />
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="bg-gray-50 py-20">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
+            Why Choose Word Lens?
+          </h2>
+          <p className="text-xl text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            Powered by AI, designed for everyone. From students to researchers,
+            Word Lens makes understanding easier.
+          </p>
+          <FeaturePlayground />
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
+            How It Works
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Step 1 */}
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg">
+                1
+              </div>
+              <h3 className="text-xl font-bold mb-2">Select Text</h3>
+              <p className="text-gray-600">
+                Highlight any word on any website you're browsing
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg">
+                2
+              </div>
+              <h3 className="text-xl font-bold mb-2">Hold Command & Click</h3>
+              <p className="text-gray-600">
+                Press ⌘ (or Ctrl) and click the selected word
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg">
+                3
+              </div>
+              <h3 className="text-xl font-bold mb-2">Get Instant Answers</h3>
+              <p className="text-gray-600">
+                AI-powered definitions appear instantly in a tooltip
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Social Proof Section */}
+      <section className="bg-gradient-to-br from-primary/5 to-secondary/5 py-20">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <h2 className="text-4xl font-bold text-center mb-12">
+            Loved by Learners Everywhere
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                quote: "Word Lens has transformed how I read academic papers. No more context switching!",
+                author: "Sarah Chen",
+                role: "PhD Candidate"
+              },
+              {
+                quote: "The AI explanations are incredibly accurate and helpful. It's like having a tutor.",
+                author: "Michael Torres",
+                role: "High School Teacher"
+              },
+              {
+                quote: "I use it every day for work. Fast, accurate, and completely free. Amazing!",
+                author: "Jessica Park",
+                role: "Technical Writer"
+              }
+            ].map((testimonial, i) => (
+              <div key={i} className="card bg-white">
+                <p className="text-gray-700 mb-4 italic">"{testimonial.quote}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold">
+                    {testimonial.author[0]}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-sm">{testimonial.author}</div>
+                    <div className="text-gray-500 text-xs">{testimonial.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-6 max-w-4xl text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Ready to Start Learning?
+          </h2>
+          <p className="text-xl text-gray-600 mb-8">
+            Join thousands of users who are expanding their vocabulary with Word Lens.
+          </p>
+          <a
+            href="https://chrome.google.com/webstore"
+            className="btn-primary inline-block text-lg px-8 py-4"
+          >
+            Add to Chrome - It's Free
+          </a>
+          <p className="text-sm text-gray-500 mt-4">
+            Compatible with Chrome, Edge, Brave, and other Chromium browsers
+          </p>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div>
+              <h3 className="text-2xl font-bold gradient-text mb-2">Word Lens</h3>
+              <p className="text-gray-400">AI-powered definitions, instantly.</p>
+            </div>
+
+            <div className="flex gap-6 text-sm">
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                Privacy Policy
+              </a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                Terms of Service
+              </a>
+              <a href="https://github.com/yourusername/word-lens" className="text-gray-400 hover:text-white transition-colors">
+                GitHub
+              </a>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+            © 2026 Word Lens. Made with ❤️ for learners everywhere.
+          </div>
+        </div>
+      </footer>
+    </main>
   );
 }
