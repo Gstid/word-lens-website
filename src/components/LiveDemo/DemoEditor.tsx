@@ -74,12 +74,12 @@ export function DemoEditor() {
       {/* Demo Text Editor */}
       <div
         className={`
-          bg-gray-50 border-2 rounded-xl p-8 cursor-text select-text transition-all duration-300
-          ${isCommandHeld ? 'border-primary shadow-lg shadow-primary/20 bg-primary/5' : 'border-gray-200'}
+          bg-dark-card border-2 rounded-xl p-8 cursor-text select-text transition-all duration-300
+          ${isCommandHeld ? 'border-primary shadow-lg shadow-primary/30 bg-primary/10' : 'border-dark-border'}
         `}
         onClick={handleTextSelect}
       >
-        <p className="text-lg leading-relaxed text-gray-700">
+        <p className="text-lg leading-relaxed text-gray-200">
           {sampleText}
         </p>
       </div>
@@ -100,9 +100,9 @@ export function DemoEditor() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="mt-4 text-center text-gray-500 text-sm"
+          className="mt-4 text-center text-gray-400 text-sm"
         >
-          💡 Hold <kbd className="px-2 py-1 bg-gray-200 rounded text-xs font-mono">⌘ Cmd</kbd> (or <kbd className="px-2 py-1 bg-gray-200 rounded text-xs font-mono">Ctrl</kbd>) and click any word to try it!
+          💡 Hold <kbd className="px-2 py-1 bg-dark-card border border-dark-border rounded text-xs font-mono text-accent-silver">⌘ Cmd</kbd> (or <kbd className="px-2 py-1 bg-dark-card border border-dark-border rounded text-xs font-mono text-accent-silver">Ctrl</kbd>) and click any word to try it!
         </motion.div>
       )}
     </div>

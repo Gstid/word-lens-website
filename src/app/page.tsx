@@ -3,17 +3,17 @@ import { FeaturePlayground } from '@/components/FeaturePlayground';
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-dark-bg">
       {/* Hero Section */}
       <section className="container mx-auto px-6 py-20 max-w-7xl">
         <div className="text-center mb-12">
-          <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight text-white">
             Understand Any Word
             <br />
             <span className="gradient-text">Instantly with AI</span>
           </h1>
 
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
             Get context-aware definitions for any word on the web.
             <br />
             Just select text, hold Command, and click.
@@ -31,14 +31,14 @@ export default function HomePage() {
             </a>
           </div>
 
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-400">
             ✓ Free forever · ✓ No sign-up required · ✓ Works offline
           </p>
         </div>
 
         {/* Live Demo */}
         <div id="demo" className="max-w-3xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center text-white">
             Try It Now - Interactive Demo
           </h2>
           <DemoEditor />
@@ -46,12 +46,12 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-dark-purple py-20 border-y border-dark-border">
         <div className="container mx-auto px-6 max-w-7xl">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">
             Why Choose Word Lens?
           </h2>
-          <p className="text-xl text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 text-center mb-12 max-w-2xl mx-auto">
             Powered by AI, designed for everyone. From students to researchers,
             Word Lens makes understanding easier.
           </p>
@@ -60,42 +60,42 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20">
+      <section className="py-20 bg-dark-bg">
         <div className="container mx-auto px-6 max-w-7xl">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
             How It Works
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {/* Step 1 */}
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg purple-glow">
                 1
               </div>
-              <h3 className="text-xl font-bold mb-2">Select Text</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold mb-2 text-white">Select Text</h3>
+              <p className="text-gray-400">
                 Highlight any word on any website you're browsing
               </p>
             </div>
 
             {/* Step 2 */}
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg purple-glow">
                 2
               </div>
-              <h3 className="text-xl font-bold mb-2">Hold Command & Click</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold mb-2 text-white">Hold Command & Click</h3>
+              <p className="text-gray-400">
                 Press ⌘ (or Ctrl) and click the selected word
               </p>
             </div>
 
             {/* Step 3 */}
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg purple-glow">
                 3
               </div>
-              <h3 className="text-xl font-bold mb-2">Get Instant Answers</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold mb-2 text-white">Get Instant Answers</h3>
+              <p className="text-gray-400">
                 AI-powered definitions appear instantly in a tooltip
               </p>
             </div>
@@ -104,9 +104,9 @@ export default function HomePage() {
       </section>
 
       {/* Social Proof Section */}
-      <section className="bg-gradient-to-br from-primary/5 to-secondary/5 py-20">
+      <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20 border-y border-dark-border">
         <div className="container mx-auto px-6 max-w-5xl">
-          <h2 className="text-4xl font-bold text-center mb-12">
+          <h2 className="text-4xl font-bold text-center mb-12 text-white">
             Loved by Learners Everywhere
           </h2>
 
@@ -128,15 +128,15 @@ export default function HomePage() {
                 role: "Technical Writer"
               }
             ].map((testimonial, i) => (
-              <div key={i} className="card bg-white">
-                <p className="text-gray-700 mb-4 italic">"{testimonial.quote}"</p>
+              <div key={i} className="card">
+                <p className="text-gray-300 mb-4 italic">"{testimonial.quote}"</p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold shadow-lg">
                     {testimonial.author[0]}
                   </div>
                   <div>
-                    <div className="font-semibold text-sm">{testimonial.author}</div>
-                    <div className="text-gray-500 text-xs">{testimonial.role}</div>
+                    <div className="font-semibold text-sm text-white">{testimonial.author}</div>
+                    <div className="text-gray-400 text-xs">{testimonial.role}</div>
                   </div>
                 </div>
               </div>
@@ -146,12 +146,12 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
+      <section className="py-20 bg-dark-bg">
         <div className="container mx-auto px-6 max-w-4xl text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
             Ready to Start Learning?
           </h2>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl text-gray-300 mb-8">
             Join thousands of users who are expanding their vocabulary with Word Lens.
           </p>
           <a
@@ -160,14 +160,14 @@ export default function HomePage() {
           >
             Add to Chrome - It's Free
           </a>
-          <p className="text-sm text-gray-500 mt-4">
+          <p className="text-sm text-gray-400 mt-4">
             Compatible with Chrome, Edge, Brave, and other Chromium browsers
           </p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-black border-t border-dark-border text-white py-12">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
@@ -176,19 +176,19 @@ export default function HomePage() {
             </div>
 
             <div className="flex gap-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-400 hover:text-accent-purple transition-colors">
                 Privacy Policy
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-400 hover:text-accent-purple transition-colors">
                 Terms of Service
               </a>
-              <a href="https://github.com/yourusername/word-lens" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://github.com/yourusername/word-lens" className="text-gray-400 hover:text-accent-purple transition-colors">
                 GitHub
               </a>
             </div>
           </div>
 
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+          <div className="border-t border-dark-border mt-8 pt-8 text-center text-gray-500 text-sm">
             © 2026 Word Lens. Made with ❤️ for learners everywhere.
           </div>
         </div>
