@@ -9,8 +9,19 @@ export function DemoEditor() {
   const [isCommandHeld, setIsCommandHeld] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [showTooltip, setShowTooltip] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const sampleText = `Artificial intelligence (AI) is transforming how we interact with technology. Through sophisticated algorithms and neural networks, AI systems can now understand context, generate creative content, and even engage in meaningful conversations.`;
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -34,32 +45,36 @@ export function DemoEditor() {
     };
   }, []);
 
-  const handleTextSelect = (e: React.MouseEvent) => {
-    if (!isCommandHeld) return;
+  const handleTextSelect = (e: React.MouseEvent | React.TouchEvent) => {
+    // On mobile, no command key needed; on desktop, require command key
+    if (!isMobile && !isCommandHeld) return;
 
-    const selection = window.getSelection();
-    const text = selection?.toString().trim();
+    // Small delay to allow text selection to complete
+    setTimeout(() => {
+      const selection = window.getSelection();
+      const text = selection?.toString().trim();
 
-    if (text && text.length > 0) {
-      const range = selection?.getRangeAt(0);
-      const rect = range?.getBoundingClientRect();
+      if (text && text.length > 0) {
+        const range = selection?.getRangeAt(0);
+        const rect = range?.getBoundingClientRect();
 
-      if (rect) {
-        setSelectedText(text);
-        setTooltipPosition({
-          x: rect.left + rect.width / 2,
-          y: rect.bottom + 10
-        });
-        setShowTooltip(true);
+        if (rect) {
+          setSelectedText(text);
+          setTooltipPosition({
+            x: rect.left + rect.width / 2,
+            y: rect.bottom + 10
+          });
+          setShowTooltip(true);
+        }
       }
-    }
+    }, 100);
   };
 
   return (
     <div className="relative">
-      {/* Command Key Indicator */}
+      {/* Command Key Indicator (Desktop only) */}
       <AnimatePresence>
-        {isCommandHeld && (
+        {!isMobile && isCommandHeld && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -75,9 +90,10 @@ export function DemoEditor() {
       <div
         className={`
           bg-dark-card border-2 rounded-xl p-8 cursor-text select-text transition-all duration-300
-          ${isCommandHeld ? 'border-primary shadow-lg shadow-primary/30 bg-primary/10' : 'border-dark-border'}
+          ${isCommandHeld || isMobile ? 'border-primary shadow-lg shadow-primary/30 bg-primary/10' : 'border-dark-border'}
         `}
         onClick={handleTextSelect}
+        onTouchEnd={handleTextSelect}
       >
         <p className="text-lg leading-relaxed text-gray-200">
           {sampleText}
@@ -102,7 +118,11 @@ export function DemoEditor() {
           animate={{ opacity: 1 }}
           className="mt-4 text-center text-gray-400 text-sm"
         >
-          💡 Hold <kbd className="px-2 py-1 bg-dark-card border border-dark-border rounded text-xs font-mono text-accent-silver">⌘ Cmd</kbd> (or <kbd className="px-2 py-1 bg-dark-card border border-dark-border rounded text-xs font-mono text-accent-silver">Ctrl</kbd>) and click any word to try it!
+          {isMobile ? (
+            <>💡 <strong>Tap and hold</strong> to select any word, then release to see the definition!</>
+          ) : (
+            <>💡 Hold <kbd className="px-2 py-1 bg-dark-card border border-dark-border rounded text-xs font-mono text-accent-silver">⌘ Cmd</kbd> (or <kbd className="px-2 py-1 bg-dark-card border border-dark-border rounded text-xs font-mono text-accent-silver">Ctrl</kbd>) and click any word to try it!</>
+          )}
         </motion.div>
       )}
     </div>
