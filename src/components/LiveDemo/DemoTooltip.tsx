@@ -18,6 +18,8 @@ export function DemoTooltip({ word, position, onClose }: DemoTooltipProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
   const [smartPosition, setSmartPosition] = useState({ left: position.x, top: position.y, transform: 'translateX(-50%)' });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   // Fetch definition on mount
@@ -36,9 +38,9 @@ export function DemoTooltip({ word, position, onClose }: DemoTooltipProps) {
     };
   }, [word]);
 
-  // Smart positioning to keep tooltip in viewport
+  // Smart positioning to keep tooltip in viewport (only on initial mount)
   useEffect(() => {
-    if (!tooltipRef.current) return;
+    if (!tooltipRef.current || isDragging) return;
 
     const tooltipRect = tooltipRef.current.getBoundingClientRect();
     const viewportWidth = window.innerWidth;
@@ -69,7 +71,46 @@ export function DemoTooltip({ word, position, onClose }: DemoTooltipProps) {
     }
 
     setSmartPosition({ left, top, transform });
-  }, [position, data]); // Recalculate when content changes
+  }, [position, data, isDragging]); // Recalculate when content changes
+
+  // Drag handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    // Only drag from header area, not from buttons
+    if ((e.target as HTMLElement).tagName === 'BUTTON') return;
+
+    setIsDragging(true);
+    const rect = tooltipRef.current?.getBoundingClientRect();
+    if (rect) {
+      setDragOffset({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      setSmartPosition({
+        left: e.clientX - dragOffset.x,
+        top: e.clientY - dragOffset.y,
+        transform: 'none' // Remove centering transform when dragging
+      });
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, dragOffset]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,7 +145,11 @@ export function DemoTooltip({ word, position, onClose }: DemoTooltipProps) {
       className="bg-dark-card text-white rounded-xl shadow-2xl max-w-md overflow-hidden"
     >
       {/* Header */}
-      <div className="p-4 border-b border-dark-border flex justify-between items-center bg-gradient-to-r from-primary/10 to-secondary/10">
+      <div
+        className="p-4 border-b border-dark-border flex justify-between items-center bg-gradient-to-r from-primary/10 to-secondary/10 select-none"
+        onMouseDown={handleMouseDown}
+        style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+      >
         <h3 className="text-accent-blue font-semibold text-lg">{word}</h3>
         <button
           onClick={onClose}
