@@ -73,7 +73,7 @@ export function DemoTooltip({ word, position, onClose }: DemoTooltipProps) {
     setSmartPosition({ left, top, transform });
   }, [position, data, isDragging]); // Recalculate when content changes
 
-  // Drag handlers
+  // Drag handlers (Mouse)
   const handleMouseDown = (e: React.MouseEvent) => {
     // Only drag from header area, not from buttons
     if ((e.target as HTMLElement).tagName === 'BUTTON') return;
@@ -84,6 +84,22 @@ export function DemoTooltip({ word, position, onClose }: DemoTooltipProps) {
       setDragOffset({
         x: e.clientX - rect.left,
         y: e.clientY - rect.top
+      });
+    }
+  };
+
+  // Drag handlers (Touch - Mobile)
+  const handleTouchStart = (e: React.TouchEvent) => {
+    // Only drag from header area, not from buttons
+    if ((e.target as HTMLElement).tagName === 'BUTTON') return;
+
+    setIsDragging(true);
+    const touch = e.touches[0];
+    const rect = tooltipRef.current?.getBoundingClientRect();
+    if (rect) {
+      setDragOffset({
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top
       });
     }
   };
@@ -99,16 +115,37 @@ export function DemoTooltip({ word, position, onClose }: DemoTooltipProps) {
       });
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault(); // Prevent scrolling while dragging
+      const touch = e.touches[0];
+      setSmartPosition({
+        left: touch.clientX - dragOffset.x,
+        top: touch.clientY - dragOffset.y,
+        transform: 'none'
+      });
+    };
+
     const handleMouseUp = () => {
       setIsDragging(false);
     };
 
+    const handleTouchEnd = () => {
+      setIsDragging(false);
+    };
+
+    // Mouse events
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
+
+    // Touch events
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd);
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
     };
   }, [isDragging, dragOffset]);
 
@@ -146,8 +183,9 @@ export function DemoTooltip({ word, position, onClose }: DemoTooltipProps) {
     >
       {/* Header */}
       <div
-        className="p-4 border-b border-dark-border flex justify-between items-center bg-gradient-to-r from-primary/10 to-secondary/10 select-none"
+        className="p-4 border-b border-dark-border flex justify-between items-center bg-gradient-to-r from-primary/10 to-secondary/10 select-none touch-none"
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
         style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
       >
         <h3 className="text-accent-blue font-semibold text-lg">{word}</h3>
