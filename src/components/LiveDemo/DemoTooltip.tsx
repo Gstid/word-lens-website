@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getMockDefinition, getMockChatResponse } from '@/lib/mockTrpc';
 
 interface DemoTooltipProps {
@@ -17,6 +17,8 @@ export function DemoTooltip({ word, position, onClose }: DemoTooltipProps) {
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
+  const [smartPosition, setSmartPosition] = useState({ left: position.x, top: position.y, transform: 'translateX(-50%)' });
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   // Fetch definition on mount
   useEffect(() => {
@@ -33,6 +35,41 @@ export function DemoTooltip({ word, position, onClose }: DemoTooltipProps) {
       cancelled = true;
     };
   }, [word]);
+
+  // Smart positioning to keep tooltip in viewport
+  useEffect(() => {
+    if (!tooltipRef.current) return;
+
+    const tooltipRect = tooltipRef.current.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    let left = position.x;
+    let top = position.y;
+    let transform = 'translateX(-50%)';
+
+    // Check if tooltip would go off the top
+    if (top < 20) {
+      top = 20;
+    }
+
+    // Check if tooltip would go off the bottom
+    if (top + tooltipRect.height > viewportHeight - 20) {
+      top = viewportHeight - tooltipRect.height - 20;
+    }
+
+    // Check if tooltip would go off the left
+    if (left - tooltipRect.width / 2 < 20) {
+      left = tooltipRect.width / 2 + 20;
+    }
+
+    // Check if tooltip would go off the right
+    if (left + tooltipRect.width / 2 > viewportWidth - 20) {
+      left = viewportWidth - tooltipRect.width / 2 - 20;
+    }
+
+    setSmartPosition({ left, top, transform });
+  }, [position, data]); // Recalculate when content changes
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,14 +90,15 @@ export function DemoTooltip({ word, position, onClose }: DemoTooltipProps) {
 
   return (
     <motion.div
+      ref={tooltipRef}
       initial={{ opacity: 0, scale: 0.9, y: -10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.9 }}
       style={{
         position: 'fixed',
-        left: position.x,
-        top: position.y,
-        transform: 'translateX(-50%)',
+        left: smartPosition.left,
+        top: smartPosition.top,
+        transform: smartPosition.transform,
         zIndex: 9999,
       }}
       className="bg-dark-card text-white rounded-xl shadow-2xl max-w-md overflow-hidden"
